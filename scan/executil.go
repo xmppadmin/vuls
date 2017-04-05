@@ -164,6 +164,7 @@ func exec(c conf.ServerInfo, cmd string, sudo bool, log ...*logrus.Entry) (resul
 
 func localExec(c conf.ServerInfo, cmdstr string, sudo bool) (result execResult) {
 	cmdstr = decorateCmd(c, cmdstr, sudo)
+	cmdstr = fmt.Sprintf("stty cols 1000; %s", cmdstr)
 	var cmd *ex.Cmd
 	if c.Distro.Family == "FreeBSD" {
 		cmd = ex.Command("/bin/sh", "-c", cmdstr)
